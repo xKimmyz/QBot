@@ -224,6 +224,7 @@ async def queue_loop():
             description=f"{member.mention}\n\n:AH_AestheticTea: ถึงคิวแล้วค้าบ\n♡ รบกวนตอบกลับเพื่อ Confirm คิวนะคะ",
             color=0x00ff00
         )
+        embed.set_image(url="https://img2.pic.in.th/26ea7ccf15861de5a.png")
 
         await channel.send(
             content=f"{member.mention}",
