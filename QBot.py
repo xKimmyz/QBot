@@ -70,7 +70,6 @@ def set_queue(guild_id, queue):
 # =========================
 
 def create_embed(guild_id):
-
     config = get_config(guild_id)
     if not config:
         return discord.Embed(description="❌ ยังไม่ได้ setup")
@@ -78,16 +77,34 @@ def create_embed(guild_id):
     queue = get_queue(guild_id)
     max_queue = config.get("max_queue", 10)
 
-    text = f"📢 ระบบจะสร้างห้องอัตโนมัติเมื่อถึงคิว\n\n"
-    text += f"จำนวนคิว: {len(queue)}/{max_queue}\n\n"
+    text = (
+        "----------------------------------------------\n"
+        "📢 ระบบจะสร้างห้องอัตโนมัติเมื่อถึงคิว\n"
+        "----------------------------------------------\n"
+        "♡ เมื่อถึงคิวแล้วบอทจะสร้างห้องให้อัตโนมัติ\n"
+        "♡ รบกวนลูกค้าตอบกลับภายใน 10 นาที\n"
+        "♡ หลังจากนั้นบอทจะปิดแชทโดยอัตโนมัติ\n"
+        "♡ ลูกค้าจำเป็นจะต้องกด รับคิว ใหม่อีกครั้งนะคะ\n"
+        "𓂃𓈒𓏸 ♡\n\n"
+    )
+
+    text += f"📊 จำนวนคิว: {len(queue)}/{max_queue}\n\n"
 
     if not queue:
-        text += "ไม่มีคิว"
+        text += "❌ ไม่มีคิว"
     else:
         for i, uid in enumerate(queue, 1):
             text += f"{i}. <@{uid}>\n"
 
-    return discord.Embed(title="📋 ระบบคิว", description=text, color=0x00FFFF)
+    embed = discord.Embed(
+        title="📋 ระบบคิว",
+        description=text,
+        color=0x00FFFF
+    )
+
+    embed.set_image(url="https://img2.pic.in.th/31dde425007dfb6cf.png")
+
+    return embed
 
 async def refresh_panel(guild):
     config = get_config(guild.id)
@@ -204,7 +221,7 @@ async def queue_loop():
         # ✅ ส่งข้อความแบบที่คุณต้องการ
         embed = discord.Embed(
             title="🎮 ถึงคิวแล้ว",
-            description=f"{member.mention}\n\ntest ถึงคิวของคุณแล้ว",
+            description=f"{member.mention}\n\n:AH_AestheticTea: ถึงคิวแล้วค้าบ\n♡ รบกวนตอบกลับเพื่อ Confirm คิวนะคะ",
             color=0x00ff00
         )
 
